@@ -1,7 +1,6 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage, useGLTF, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
-import { Loader } from '@react-three/drei';
 
 interface ModelProps {
   url: string;

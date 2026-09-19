@@ -9,7 +9,7 @@ interface DigitalTwinPageProps {
 }
 
 export const DigitalTwinPage: React.FC<DigitalTwinPageProps> = ({ onBack }) => {
-  const { setDigitalTwin } = usePipelineStore();
+  const { } = usePipelineStore();
   const [status, setStatus] = useState<'loading' | 'processing' | 'ready' | 'error'>('loading');
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);

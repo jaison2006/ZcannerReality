@@ -19,7 +19,6 @@ export const CameraView: React.FC<CameraViewProps> = ({ onFrameCapture, onObject
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [isLocked, setIsLocked] = useState(false);
   const [trackingStatus, setTrackingStatus] = useState<'idle' | 'tracking' | 'lost' | 'error'>('idle');
 
   const startCamera = async (facingMode: 'user' | 'environment' = 'environment') => {
@@ -126,7 +125,9 @@ export const CameraView: React.FC<CameraViewProps> = ({ onFrameCapture, onObject
             img.crossOrigin = 'anonymous';
             img.src = data.mask;
             img.onload = () => {
-              ctx.drawImage(img, 0, 0, maskCanvasRef.current.width, maskCanvasRef.current.height);
+              if (maskCanvasRef.current) {
+                ctx.drawImage(img, 0, 0, maskCanvasRef.current.width, maskCanvasRef.current.height);
+              }
             };
           } else {
             // Fallback to RLE decoder for legacy/local workers
@@ -168,7 +169,7 @@ export const CameraView: React.FC<CameraViewProps> = ({ onFrameCapture, onObject
 
   // New: Handle tracking frames in a loop once locked
   useEffect(() => {
-    let trackingInterval: NodeJS.Timeout;
+    let trackingInterval: ReturnType<typeof setInterval>;
 
     if (isLocked && trackingStatus === 'tracking' && wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       trackingInterval = setInterval(() => {
