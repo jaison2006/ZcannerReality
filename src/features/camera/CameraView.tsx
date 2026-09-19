@@ -19,7 +19,7 @@ export const CameraView: React.FC<CameraViewProps> = ({ onFrameCapture, onObject
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [isLocked, setIsLocked] = useState(false);
+  const [isLocked] = useState(false);
   const [trackingStatus, setTrackingStatus] = useState<'idle' | 'tracking' | 'lost' | 'error'>('idle');
 
   const startCamera = async (facingMode: 'user' | 'environment' = 'environment') => {
